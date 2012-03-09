@@ -67,7 +67,7 @@ public class Entity implements IEntity {
 
 	@Override
 	public <T extends IEntityComponent> T add(T entityComponent) {
-		return add(entityComponent, true);
+		return add(entityComponent, false);
 	}
 
 	@SuppressWarnings("unchecked")
