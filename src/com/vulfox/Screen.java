@@ -104,6 +104,22 @@ public abstract class Screen {
 	public void draw(Canvas canvas) {
 
 	}
+	
+	/**
+	 * Updates the screen components
+	 * 
+	 * @param timeStep
+	 */
+	public void updateComponents(float timeStep) {
+		synchronized (screenComponents) {
+			if (screenComponents != null) {
+				for (int i = 0; i < screenComponents.size(); i++) {
+					ScreenComponent screenComponent = screenComponents.get(i);
+					screenComponent.update(timeStep);
+				}
+			}
+		}
+	}
 
 	/**
 	 * If a screen component was touched execute the components handle method.

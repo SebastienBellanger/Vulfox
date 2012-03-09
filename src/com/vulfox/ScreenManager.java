@@ -110,6 +110,7 @@ public class ScreenManager {
 		if (mScreenList.size() > 0) {
 			Screen topScreen = mScreenList.getLast();
 			topScreen.update(timeStep);
+			topScreen.updateComponents(timeStep);
 		}
 	}
 
