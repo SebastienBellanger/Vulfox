@@ -8,6 +8,4 @@ public interface IEntityComponent {
 	
 	public void initialize();
 	
-	public void update(float timeStep);
-	
 }

@@ -1,13 +1,26 @@
 package com.vulfox.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import android.graphics.Canvas;
 
 public class Entity implements IEntity {
 
+	protected String mIdentifier;
+	
 	protected HashMap<Class<? extends IEntityComponent>, IEntityComponent> mComponents = new HashMap<Class<? extends IEntityComponent>, IEntityComponent>();
 
+	public Entity(String identifier) {
+		mIdentifier = identifier;
+	}
+	
+	@Override
+	public String getIdentifier() {
+		return mIdentifier;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends IEntityComponent> T find(Class<T> klass) {
@@ -26,6 +39,25 @@ public class Entity implements IEntity {
 		}
 		
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends IEntityComponent> List<T> findAll(Class<T> klass) {
+				
+		List<T> components = new ArrayList<T>();				
+		
+		for (IEntityComponent entityComponent : mComponents.values()) {					
+			if(klass.isInstance(entityComponent)) {
+				T instance = (T) entityComponent;			
+				if(instance != null)
+				{
+					components.add(instance);
+				}
+			}			
+		}
+		
+		return components;
 	}
 
 	@Override
@@ -63,29 +95,6 @@ public class Entity implements IEntity {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void update(float timeStep) {
-
-		for (IEntityComponent entityComponent : mComponents.values()) {
-			entityComponent.update(timeStep);
-		}
-		
-	}
-
-	@Override
-	public void draw(Canvas canvas) {
-		
-		for (IEntityComponent entityComponent : mComponents.values()) {
-			
-			if(entityComponent instanceof IDrawable) {				
-				IDrawable drawable = (IDrawable)entityComponent;				
-				drawable.draw(canvas);
-			}
-			
-		}
-		
 	}
 
 }

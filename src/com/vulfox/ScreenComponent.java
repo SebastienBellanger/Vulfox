@@ -23,6 +23,12 @@ abstract class ScreenComponent {
 	private int height;
 	
 	/**
+	 * Update this component
+	 * @param timeStep
+	 */
+	abstract void update(float timeStep);		
+	
+	/**
 	 * Draws this component
 	 * @param canvas
 	 */

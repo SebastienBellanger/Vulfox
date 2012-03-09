@@ -17,7 +17,4 @@ public abstract class EntityComponent implements IEntityComponent {
 	@Override
 	public abstract void initialize();
 
-	@Override
-	public abstract void update(float timeStep);
-
 }

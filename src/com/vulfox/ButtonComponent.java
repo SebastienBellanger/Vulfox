@@ -76,6 +76,10 @@ public class ButtonComponent extends ScreenComponent {
 	}
 
 	@Override
+	void update(float timeStep) {	
+	}
+	
+	@Override
 	void draw(Canvas canvas) {
 		
 		if (background == null) {
