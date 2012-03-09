@@ -59,24 +59,29 @@ public class Entity implements IEntity {
 		
 		return components;
 	}
-
+	
 	@Override
-	public <T extends IEntityComponent> void add(T entityComponent) {
-		add(entityComponent, true);
+	public <T extends IEntityComponent> boolean has(Class<T> klass) {
+		return mComponents.containsKey(klass);		
 	}
 
 	@Override
-	public <T extends IEntityComponent> void add(T entityComponent,
+	public <T extends IEntityComponent> T add(T entityComponent) {
+		return add(entityComponent, true);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends IEntityComponent> T add(T entityComponent,
 			boolean replace) {
 
-		@SuppressWarnings("unchecked")
 		Class<T> klass = (Class<T>) entityComponent.getClass();
 
 		if (mComponents.containsKey(klass)) {
 			if (replace) {
 				mComponents.remove(klass);
 			} else {
-				return;
+				return (T) find(entityComponent.getClass());
 			}
 		}
 
@@ -85,10 +90,13 @@ public class Entity implements IEntity {
 		// Do initialization here so that cyclic dependencies can be resolved
 		entityComponent.setParent(this);
 		entityComponent.initialize();
+		
+		return entityComponent;
 	}
 
 	@Override
 	public <T extends IEntityComponent> boolean remove(Class<T> klass) {
+		
 		if (mComponents.containsKey(klass)) {
 			mComponents.remove(klass);
 			return true;
